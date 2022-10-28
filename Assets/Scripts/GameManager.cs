@@ -64,11 +64,11 @@ public class GameManager : MonoBehaviour
 
         background.transform.Rotate(direct * rotateSpeed * Time.deltaTime);
 
-        if ((gameMode.check(GameMode.TO_MALE) && (background.transform.rotation.z < -rest))||
-           (gameMode.check(GameMode.TO_FEMALE) && (background.transform.rotation.z > (1 + rest)))){
-            return;
+        if (
+                (gameMode.check(GameMode.TO_MALE) && (background.transform.rotation.z > -rest))||
+                (gameMode.check(GameMode.TO_FEMALE) && (background.transform.rotation.z < (1 + rest)))
+            ){
+            gameMode.next();;
         } 
-
-        gameMode.next();
     }
 }
