@@ -39,10 +39,10 @@ public class GameManager : MonoBehaviour
 
         gameMode.next();
         var task = tasks.take();
-        messageText.text = adaptadeToGender(task.message);
+        messageText.text = adaptToGender(task.message);
     }
  
-    public string adaptadeToGender(string message) {
+    public string adaptToGender(string message) {
         Regex maleRegex = new Regex(@"\[(?<f>[^\]]+)\]");
         Regex femaleRegex = new Regex(@"\((?<m>[^\)]+)\)");
 
@@ -54,10 +54,11 @@ public class GameManager : MonoBehaviour
     }
 
     public void rotateBackground() {
+        var float rest = 0.1f
         if (gameMode.check(GameMode.TO_MALE)) {
             background.transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
 
-            if(background.transform.rotation.z > -0.1){
+            if(background.transform.rotation.z > -rest){
                 gameMode.next();
             }
         } 
@@ -65,7 +66,7 @@ public class GameManager : MonoBehaviour
         if (gameMode.check(GameMode.TO_FEMALE)) {
             background.transform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
 
-            if(background.transform.rotation.z < -0.99){
+            if(background.transform.rotation.z < (1 + rest)){
                 gameMode.next();
             }
         } 
