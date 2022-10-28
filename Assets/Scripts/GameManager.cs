@@ -54,21 +54,21 @@ public class GameManager : MonoBehaviour
     }
 
     public void rotateBackground() {
-        var float rest = 0.1f
-        if (gameMode.check(GameMode.TO_MALE)) {
-            background.transform.Rotate(Vector3.forward * rotateSpeed * Time.deltaTime);
+        if (!gameMode.isChange) {
+            return;
+        }
 
-            if(background.transform.rotation.z > -rest){
-                gameMode.next();
-            }
+        var rest = 0.1f;
+
+        var direct = (gameMode.check(GameMode.TO_MALE)) ? Vector3.forward : Vector3.back;
+
+        background.transform.Rotate(direct * rotateSpeed * Time.deltaTime);
+
+        if ((gameMode.check(GameMode.TO_MALE) && (background.transform.rotation.z < -rest))||
+           (gameMode.check(GameMode.TO_FEMALE) && (background.transform.rotation.z > (1 + rest)))){
+            return;
         } 
 
-        if (gameMode.check(GameMode.TO_FEMALE)) {
-            background.transform.Rotate(Vector3.back * rotateSpeed * Time.deltaTime);
-
-            if(background.transform.rotation.z < (1 + rest)){
-                gameMode.next();
-            }
-        } 
+        gameMode.next();
     }
 }
